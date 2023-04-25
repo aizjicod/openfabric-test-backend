@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('openfabric-test-backend:server');
 var http = require('http');
+const mongoose = require('mongoose')
 
 /**
  * Get port from environment and store in Express.
@@ -25,8 +26,14 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
-server.on('error', onError);
+mongoose.connect('mongodb+srv://aletv1501:EZIlMLXg0gpbjqqO@openfabrictest.mlvmvie.mongodb.net/node-api?retryWrites=true&w=majority')
+.then(() => {
+  console.log('connected')
+  server.listen(port);
+}).catch((err) => {
+  console.log(err)
+  server.on('error', onError);
+})
 server.on('listening', onListening);
 
 /**
